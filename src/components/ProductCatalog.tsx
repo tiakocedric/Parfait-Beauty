@@ -28,13 +28,13 @@ const ProductCatalog: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-            Notre Collection{' '}
+            Nos Produits{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-amber-500">
-              Premium
+              Phares du Moment
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Découvrez nos produits soigneusement sélectionnés pour votre beauté et votre bien-être
+            Gluta Glow, Collagen SUPER et Collagen With Burn - Des résultats que vous allez adorer !
           </p>
         </div>
 

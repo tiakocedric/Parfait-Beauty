@@ -23,8 +23,8 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <p className="text-gray-300 mb-6 max-w-md leading-relaxed">
-              Votre destination beauté au Cameroun. Nous proposons une sélection premium 
-              de cosmétiques et soins de beauté pour révéler votre éclat naturel.
+              Votre destination beauté au Cameroun. Découvrez nos compléments premium Gluta Glow, 
+              Collagen SUPER et Collagen With Burn pour une beauté naturelle éclatante.
             </p>
             
             <div className="flex items-center space-x-4">
@@ -38,18 +38,33 @@ const Footer: React.FC = () => {
               
               <div className="flex items-center space-x-3">
                 <a 
-                  href="#" 
+                  href="https://instagram.com/parfaitShopandbeauty" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 hover:text-pink-400 transition-colors"
                   aria-label="Instagram"
                 >
                   <Instagram className="h-5 w-5" />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://www.facebook.com/profile.php?id=61579786973042" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 hover:text-blue-400 transition-colors"
                   aria-label="Facebook"
                 >
                   <Facebook className="h-5 w-5" />
+                </a>
+                <a 
+                  href="https://tiktok.com/@parfaitShopandbeauty" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-pink-400 transition-colors"
+                  aria-label="TikTok"
+                >
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                  </svg>
                 </a>
               </div>
             </div>
@@ -88,14 +103,17 @@ const Footer: React.FC = () => {
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-300 text-sm">+237 6 94 16 59 96</span>
+                <div className="text-gray-300 text-sm">
+                  <div>+237 6 94 16 59 96</div>
+                  <div>+237 6 90 89 33 20</div>
+                </div>
               </div>
               <div className="flex items-center space-x-2">
                 <MessageCircle className="h-4 w-4 text-green-400" />
                 <span className="text-gray-300 text-sm">WhatsApp 24/7</span>
               </div>
               <p className="text-gray-300 text-sm mt-3">
-                Douala, Cameroun<br />
+                Village, Douala, Cameroun<br />
                 Livraison nationale
               </p>
             </div>
@@ -116,7 +134,7 @@ const Footer: React.FC = () => {
             </div>
             <div className="text-center">
               <h5 className="font-medium text-white mb-1">Compléments</h5>
-              <p className="text-sm text-gray-400">Vitamines, collagène</p>
+              <p className="text-sm text-gray-400">Gluta Glow, Collagen SUPER</p>
             </div>
             <div className="text-center">
               <h5 className="font-medium text-white mb-1">Soins</h5>

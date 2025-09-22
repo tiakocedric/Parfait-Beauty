@@ -62,6 +62,33 @@ export const products: Product[] = [
   // Compléments
   {
     id: '7',
+    name: 'Gluta Glow Premium',
+    description: 'Complément révolutionnaire au glutathion pour un éclat uniforme qui rayonne de l\'intérieur. Peau hydratée, ferme et éclatante garantie.',
+    price: 45000,
+    stock: 12,
+    category: 'compléments',
+    image_url: 'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=400'
+  },
+  {
+    id: '8',
+    name: 'Collagen SUPER',
+    description: 'Formule exclusive de collagène premium pour réduire rides et ridules. Cheveux plus épais, ongles plus forts, résultats visibles rapidement.',
+    price: 38000,
+    stock: 15,
+    category: 'compléments',
+    image_url: 'https://images.pexels.com/photos/3873193/pexels-photo-3873193.jpeg?auto=compress&cs=tinysrgb&w=400'
+  },
+  {
+    id: '9',
+    name: 'Collagen With Burn',
+    description: 'Double action : collagène anti-âge + brûleur de graisse. Regain d\'énergie, métabolisme boosté et beauté naturelle au goût délicieux.',
+    price: 42000,
+    stock: 10,
+    category: 'compléments',
+    image_url: 'https://images.pexels.com/photos/4465831/pexels-photo-4465831.jpeg?auto=compress&cs=tinysrgb&w=400'
+  },
+  {
+    id: '10',
     name: 'Collagène Marine Premium',
     description: 'Complément alimentaire au collagène marin pour une peau éclatante et des cheveux forts. Cure de 30 jours.',
     price: 35000,
@@ -70,7 +97,7 @@ export const products: Product[] = [
     image_url: 'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=400'
   },
   {
-    id: '8',
+    id: '11',
     name: 'Vitamines Beauté Complex',
     description: 'Complexe de vitamines et minéraux pour la beauté. Biotine, zinc et vitamines du groupe B.',
     price: 28000,
@@ -81,7 +108,7 @@ export const products: Product[] = [
 
   // Soins
   {
-    id: '9',
+    id: '12',
     name: 'Gommage Corps Exfoliant',
     description: 'Gommage doux au sucre et huiles essentielles pour une peau douce et lisse. Parfum relaxant.',
     price: 22000,
@@ -90,7 +117,7 @@ export const products: Product[] = [
     image_url: 'https://images.pexels.com/photos/4465835/pexels-photo-4465835.jpeg?auto=compress&cs=tinysrgb&w=400'
   },
   {
-    id: '10',
+    id: '13',
     name: 'Baume Corps Nourrissant',
     description: 'Baume riche pour nourrir intensément la peau sèche. Formule au beurre de karité et huile d\'argan.',
     price: 19000,
@@ -99,7 +126,7 @@ export const products: Product[] = [
     image_url: 'https://images.pexels.com/photos/4465822/pexels-photo-4465822.jpeg?auto=compress&cs=tinysrgb&w=400'
   },
   {
-    id: '11',
+    id: '14',
     name: 'Huile de Massage Relaxante',
     description: 'Huile de massage aux huiles essentielles apaisantes. Idéale pour la détente et l\'hydratation.',
     price: 24000,
@@ -108,7 +135,7 @@ export const products: Product[] = [
     image_url: 'https://images.pexels.com/photos/3735674/pexels-photo-3735674.jpeg?auto=compress&cs=tinysrgb&w=400'
   },
   {
-    id: '12',
+    id: '15',
     name: 'Coffret Découverte Beauté',
     description: 'Coffret contenant 5 miniatures de nos bestsellers. Parfait pour découvrir notre gamme premium.',
     price: 45000,

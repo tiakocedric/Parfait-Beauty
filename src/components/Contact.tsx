@@ -36,6 +36,7 @@ const Contact: React.FC = () => {
                   <div>
                     <p className="font-semibold text-gray-900">Téléphone</p>
                     <p className="text-gray-600">+237 6 94 16 59 96</p>
+                    <p className="text-gray-600">+237 6 90 89 33 20</p>
                   </div>
                 </div>
 
@@ -44,6 +45,7 @@ const Contact: React.FC = () => {
                   <div>
                     <p className="font-semibold text-gray-900">WhatsApp</p>
                     <p className="text-gray-600">+237 6 94 16 59 96</p>
+                    <p className="text-gray-600">+237 6 90 89 33 20</p>
                   </div>
                 </div>
 
@@ -51,7 +53,7 @@ const Contact: React.FC = () => {
                   <Mail className="h-6 w-6 text-blue-500 mt-1" />
                   <div>
                     <p className="font-semibold text-gray-900">Email</p>
-                    <p className="text-gray-600">contact@parfaitbeauty.cm</p>
+                    <p className="text-gray-600">nyaparfait91@gmail.com</p>
                   </div>
                 </div>
 
@@ -60,7 +62,7 @@ const Contact: React.FC = () => {
                   <div>
                     <p className="font-semibold text-gray-900">Adresse</p>
                     <p className="text-gray-600">
-                      Douala, Cameroun<br />
+                      Village, Douala, Cameroun<br />
                       Livraison dans tout le pays
                     </p>
                   </div>
@@ -81,7 +83,8 @@ const Contact: React.FC = () => {
                   <Instagram className="h-6 w-6 text-purple-500 mt-1" />
                   <div>
                     <p className="font-semibold text-gray-900">Réseaux sociaux</p>
-                    <p className="text-gray-600">@parfaitbeauty_cm</p>
+                    <p className="text-gray-600">@parfaitShopandbeauty</p>
+                    <p className="text-gray-500 text-sm">Instagram • TikTok • Facebook</p>
                   </div>
                 </div>
               </div>

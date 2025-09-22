@@ -51,7 +51,7 @@ export const formatWhatsAppMessage = (orderData: OrderData): string => {
 export const sendWhatsAppOrder = (orderData: OrderData): void => {
   const message = formatWhatsAppMessage(orderData);
   const encodedMessage = encodeURIComponent(message);
-  const whatsappNumber = '237694165996'; // Numéro WhatsApp fourni
+  const whatsappNumber = '237694165996'; // Numéro WhatsApp principal
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
   
   // Ouvrir WhatsApp

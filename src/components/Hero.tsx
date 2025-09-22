@@ -15,20 +15,20 @@ const Hero: React.FC = () => {
           <div className="flex justify-center mb-6">
             <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-pink-200">
               <Sparkles className="h-5 w-5 text-amber-500" />
-              <span className="text-sm font-semibold text-gray-700">Nouveautés 2025</span>
+              <span className="text-sm font-semibold text-gray-700">Produits phares du moment</span>
             </div>
           </div>
 
           <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Révélez votre{' '}
+            Gluta Glow & Collagen{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-amber-500">
-              beauté naturelle
+              Premium Collection
             </span>
           </h1>
 
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Découvrez notre collection premium de cosmétiques et soins de beauté. 
-            Des produits d'exception pour sublimer votre routine beauté au quotidien.
+            Découvrez nos compléments beauté premium ! Redonnez à votre corps tout ce qu'il mérite avec 
+            Gluta Glow, Collagen SUPER et Collagen With Burn. Des résultats visibles, 100% sûrs et sans effets secondaires.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
