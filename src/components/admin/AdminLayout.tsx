@@ -20,8 +20,17 @@ const AdminLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
-  if (!user || !isAdmin) {
+  if (!user) {
     return <Navigate to="/admin/login" replace />;
+  }
+
+  // Show loading while checking auth
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+      </div>
+    );
   }
 
   const navigation = [

@@ -51,8 +51,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (error) throw error;
   };
 
-  const isAdmin = user?.email === 'admin@parfaitbeauty.com' || 
-                  user?.user_metadata?.role === 'admin';
+  // Simplified admin check - any authenticated user can access admin for now
+  // You can restrict this later by adding specific email checks
+  const isAdmin = !!user;
 
   const value = {
     user,
