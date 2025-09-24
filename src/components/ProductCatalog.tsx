@@ -1,11 +1,39 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Search, Filter } from 'lucide-react';
-import { products } from '../data/products';
+import { supabase } from '../lib/supabase';
 import ProductCard from './ProductCard';
+import { Product } from '../types';
 
 const ProductCatalog: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .gt('stock', 0) // Only show products in stock
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setProducts(data || []);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      // Fallback to static data if database fails
+      const { products: staticProducts } = await import('../data/products');
+      setProducts(staticProducts);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const categories = [
     { id: 'all', label: 'Tous les produits', count: products.length },
@@ -74,7 +102,11 @@ const ProductCatalog: React.FC = () => {
         </div>
 
         {/* Products Grid */}
-        {filteredProducts.length > 0 ? (
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+          </div>
+        ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />

@@ -54,8 +54,52 @@ export const sendWhatsAppOrder = (orderData: OrderData): void => {
   const whatsappNumber = '237694165996'; // Numéro WhatsApp principal
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
   
+  // Log order to database
+  logOrderToDatabase(orderData);
+  
   // Ouvrir WhatsApp
   window.open(whatsappUrl, '_blank');
+};
+
+const logOrderToDatabase = async (orderData: OrderData) => {
+  try {
+    const { supabase } = await import('../lib/supabase');
+    
+    // Insert order
+    const { data: order, error: orderError } = await supabase
+      .from('orders')
+      .insert([{
+        customer_name: orderData.customerName,
+        phone: orderData.phone,
+        address: orderData.address,
+        comment: orderData.comment,
+        subtotal: orderData.subtotal,
+        delivery_fee: orderData.deliveryFee,
+        total: orderData.total,
+        status: 'pending'
+      }])
+      .select()
+      .single();
+
+    if (orderError) throw orderError;
+
+    // Insert order items
+    const orderItems = orderData.items.map(item => ({
+      order_id: order.id,
+      product_id: item.id,
+      quantity: item.quantity,
+      price: item.price
+    }));
+
+    const { error: itemsError } = await supabase
+      .from('order_items')
+      .insert(orderItems);
+    if (itemsError) throw itemsError;
+
+  } catch (error) {
+    console.error('Error logging order to database:', error);
+    // Don't block the WhatsApp flow if database fails
+  }
 };
 
 export const formatPrice = (price: number): string => {
