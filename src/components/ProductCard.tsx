@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Plus, Star } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
@@ -50,9 +51,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100">
+    <div className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100 relative">
       {/* Image Container */}
-      <div className="relative overflow-hidden">
+      <Link to={`/product/${product.id}`} className="block relative overflow-hidden">
         <img
           src={product.image_url}
           alt={product.name}
@@ -80,13 +81,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </span>
           </div>
         )}
-      </div>
+      </Link>
 
       {/* Content */}
       <div className="p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors">
-          {product.name}
-        </h3>
+        <Link to={`/product/${product.id}`}>
+          <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors">
+            {product.name}
+          </h3>
+        </Link>
         
         <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">
           {product.description}
@@ -95,9 +98,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Price and Add to Cart */}
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-2xl font-bold text-gray-900">
-              {formatPrice(product.price)}
-            </span>
+            <Link to={`/product/${product.id}`}>
+              <span className="text-2xl font-bold text-gray-900 hover:text-pink-600 transition-colors">
+                {formatPrice(product.price)}
+              </span>
+            </Link>
           </div>
           
           <button
@@ -115,6 +120,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.stock === 0 ? 'Rupture' : 'Ajouter'}
           </button>
         </div>
+        
+        {/* View Details Link */}
+        <Link
+          to={`/product/${product.id}`}
+          className="block w-full text-center mt-3 py-2 text-sm text-pink-600 hover:text-pink-700 font-medium border border-pink-200 rounded-full hover:bg-pink-50 transition-all duration-300"
+        >
+          Voir les détails
+        </Link>
       </div>
     </div>
   );

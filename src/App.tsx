@@ -5,6 +5,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductCatalog from './components/ProductCatalog';
+import ProductDetails from './components/ProductDetails';
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -33,6 +34,16 @@ function App() {
                   <About />
                   <Contact />
                 </main>
+                <Footer />
+                <Cart />
+              </div>
+            } />
+            
+            {/* Product Details Route */}
+            <Route path="/product/:id" element={
+              <div className="min-h-screen bg-white">
+                <Header />
+                <ProductDetails />
                 <Footer />
                 <Cart />
               </div>
