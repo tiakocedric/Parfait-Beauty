@@ -9,6 +9,30 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+// Helper functions for categories
+export const getCategories = async () => {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('is_active', true)
+    .order('display_order');
+  
+  if (error) throw error;
+  return data;
+};
+
+export const getCategoryBySlug = async (slug: string) => {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_active', true)
+    .single();
+  
+  if (error) throw error;
+  return data;
+};
+
 // Helper functions for admin operations
 export const uploadProductImage = async (file: File, productId: string) => {
   const fileExt = file.name.split('.').pop();

@@ -39,7 +39,16 @@ const ProductDetails: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select('*')
+        .select(`
+          *,
+          categories (
+            id,
+            name,
+            slug,
+            color,
+            icon
+          )
+        `)
         .eq('id', productId)
         .single();
 
@@ -86,33 +95,14 @@ const ProductDetails: React.FC = () => {
   };
 
   const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'cheveux':
-        return 'bg-purple-100 text-purple-700';
-      case 'visage':
-        return 'bg-pink-100 text-pink-700';
-      case 'compléments':
-        return 'bg-green-100 text-green-700';
-      case 'soins':
-        return 'bg-amber-100 text-amber-700';
-      default:
-        return 'bg-gray-100 text-gray-700';
+    if (product?.categories?.color) {
+      return `text-white bg-[${product.categories.color}]`;
     }
+    return 'bg-gray-100 text-gray-700';
   };
 
-  const getCategoryLabel = (category: string) => {
-    switch (category) {
-      case 'cheveux':
-        return 'Cheveux';
-      case 'visage':
-        return 'Visage';
-      case 'compléments':
-        return 'Compléments';
-      case 'soins':
-        return 'Soins';
-      default:
-        return category;
-    }
+  const getCategoryLabel = () => {
+    return product?.categories?.name || 'Catégorie';
   };
 
   const getProductBenefits = (productName: string) => {
@@ -267,8 +257,11 @@ const ProductDetails: React.FC = () => {
           <div className="space-y-6">
             {/* Category & Rating */}
             <div className="flex items-center justify-between">
-              <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getCategoryColor(product.category)}`}>
-                {getCategoryLabel(product.category)}
+              <span 
+                className="px-3 py-1 rounded-full text-sm font-semibold text-white"
+                style={{ backgroundColor: product.categories?.color || '#6B7280' }}
+              >
+                {getCategoryLabel()}
               </span>
               <div className="flex items-center space-x-1">
                 {[...Array(5)].map((_, i) => (

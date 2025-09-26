@@ -1,25 +1,36 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Search, Filter } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { supabase, getCategories } from '../lib/supabase';
 import ProductCard from './ProductCard';
-import { Product } from '../types';
+import { Product, Category } from '../types';
 
 const ProductCatalog: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
 
   const fetchProducts = async () => {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select('*')
+        .select(`
+          *,
+          categories (
+            id,
+            name,
+            slug,
+            color,
+            icon
+          )
+        `)
         .gt('stock', 0) // Only show products in stock
         .order('created_at', { ascending: false });
 
@@ -35,18 +46,28 @@ const ProductCatalog: React.FC = () => {
     }
   };
 
-  const categories = [
+  const fetchCategories = async () => {
+    try {
+      const data = await getCategories();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const categoryOptions = [
     { id: 'all', label: 'Tous les produits', count: products.length },
-    { id: 'cheveux', label: 'Cheveux', count: products.filter(p => p.category === 'cheveux').length },
-    { id: 'visage', label: 'Visage', count: products.filter(p => p.category === 'visage').length },
-    { id: 'compléments', label: 'Compléments', count: products.filter(p => p.category === 'compléments').length },
-    { id: 'soins', label: 'Soins', count: products.filter(p => p.category === 'soins').length }
+    ...categories.map(cat => ({
+      id: cat.id,
+      label: cat.name,
+      count: products.filter(p => p.category_id === cat.id).length
+    }))
   ];
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'all' || product.category_id === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -82,7 +103,7 @@ const ProductCatalog: React.FC = () => {
 
           {/* Category Filters */}
           <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
+            {categoryOptions.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}

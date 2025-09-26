@@ -21,33 +21,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'cheveux':
-        return 'bg-purple-100 text-purple-700';
-      case 'visage':
-        return 'bg-pink-100 text-pink-700';
-      case 'compléments':
-        return 'bg-green-100 text-green-700';
-      case 'soins':
-        return 'bg-amber-100 text-amber-700';
-      default:
-        return 'bg-gray-100 text-gray-700';
+    // Utiliser la couleur de la catégorie depuis la base de données
+    if (product.categories?.color) {
+      const color = product.categories.color;
+      return `text-white` + ` bg-[${color}]`;
     }
+    return 'bg-gray-100 text-gray-700';
   };
 
-  const getCategoryLabel = (category: string) => {
-    switch (category) {
-      case 'cheveux':
-        return 'Cheveux';
-      case 'visage':
-        return 'Visage';
-      case 'compléments':
-        return 'Compléments';
-      case 'soins':
-        return 'Soins';
-      default:
-        return category;
-    }
+  const getCategoryLabel = () => {
+    return product.categories?.name || 'Catégorie';
   };
 
   return (
@@ -62,8 +45,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         
         {/* Category Badge */}
         <div className="absolute top-4 left-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getCategoryColor(product.category)}`}>
-            {getCategoryLabel(product.category)}
+          <span 
+            className="px-3 py-1 rounded-full text-xs font-semibold text-white"
+            style={{ backgroundColor: product.categories?.color || '#6B7280' }}
+          >
+            {getCategoryLabel()}
           </span>
         </div>
 
