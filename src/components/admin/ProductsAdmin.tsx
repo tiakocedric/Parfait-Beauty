@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit, 
-  Trash2, 
-  Eye,
-  Upload,
-  X,
-  Save,
-  AlertTriangle
-} from 'lucide-react';
+import { Plus, Search, Filter, CreditCard as Edit, Trash2, Eye, Upload, X, Save, AlertTriangle } from 'lucide-react';
 import { supabase, uploadProductImage, deleteProductImage } from '../../lib/supabase';
 import { formatPrice } from '../../utils/whatsapp';
-import { Product, Category } from '../../types';
+import { Product } from '../../types';
 
 const ProductsAdmin: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -29,15 +17,22 @@ const ProductsAdmin: React.FC = () => {
     description: '',
     price: '',
     stock: '',
-    category_id: '',
+    category: 'cheveux' as const,
     image_url: ''
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
+  const categories = [
+    { id: 'all', label: 'Tous' },
+    { id: 'cheveux', label: 'Cheveux' },
+    { id: 'visage', label: 'Visage' },
+    { id: 'compléments', label: 'Compléments' },
+    { id: 'soins', label: 'Soins' }
+  ];
+
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, []);
 
   useEffect(() => {
@@ -48,15 +43,7 @@ const ProductsAdmin: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select(`
-          *,
-          categories (
-            id,
-            name,
-            slug,
-            color
-          )
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -65,21 +52,6 @@ const ProductsAdmin: React.FC = () => {
       console.error('Error fetching products:', error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('categories')
-        .select('*')
-        .eq('is_active', true)
-        .order('display_order');
-      
-      if (error) throw error;
-      setCategories(data || []);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
     }
   };
 
@@ -94,7 +66,7 @@ const ProductsAdmin: React.FC = () => {
     }
 
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(product => product.category_id === selectedCategory);
+      filtered = filtered.filter(product => product.category === selectedCategory);
     }
 
     setFilteredProducts(filtered);
@@ -107,7 +79,7 @@ const ProductsAdmin: React.FC = () => {
       description: '',
       price: '',
       stock: '',
-      category_id: categories[0]?.id || '',
+      category: 'cheveux',
       image_url: ''
     });
     setImageFile(null);
@@ -121,7 +93,7 @@ const ProductsAdmin: React.FC = () => {
       description: product.description || '',
       price: product.price.toString(),
       stock: product.stock.toString(),
-      category_id: product.category_id,
+      category: product.category,
       image_url: product.image_url
     });
     setImageFile(null);
@@ -171,7 +143,7 @@ const ProductsAdmin: React.FC = () => {
         description: formData.description,
         price: parseInt(formData.price),
         stock: parseInt(formData.stock),
-        category_id: formData.category_id,
+        category: formData.category,
         image_url: imageUrl,
         updated_at: new Date().toISOString()
       };
@@ -255,10 +227,9 @@ const ProductsAdmin: React.FC = () => {
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
             >
-              <option value="all">Tous</option>
               {categories.map(category => (
                 <option key={category.id} value={category.id}>
-                  {category.name}
+                  {category.label}
                 </option>
               ))}
             </select>
@@ -311,7 +282,7 @@ const ProductsAdmin: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-pink-100 text-pink-800">
-                      {product.categories?.name || 'Sans catégorie'}
+                      {product.category}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -433,17 +404,15 @@ const ProductsAdmin: React.FC = () => {
                   Catégorie *
                 </label>
                 <select
-                  value={formData.category_id}
-                  onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   required
                 >
-                  <option value="">Sélectionner une catégorie</option>
-                  {categories.map(category => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
+                  <option value="cheveux">Cheveux</option>
+                  <option value="visage">Visage</option>
+                  <option value="compléments">Compléments</option>
+                  <option value="soins">Soins</option>
                 </select>
               </div>
 
