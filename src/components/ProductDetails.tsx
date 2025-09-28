@@ -55,7 +55,9 @@ const ProductDetails: React.FC = () => {
             id,
             name,
             slug,
-        .select('*')
+            color
+          )
+        `)
         .eq('id', productId)
         .single();
 
@@ -265,8 +267,7 @@ const ProductDetails: React.FC = () => {
             {/* Category & Rating */}
             <div className="flex items-center justify-between">
               <span 
-                className="px-3 py-1 rounded-full text-sm font-semibold text-white"
-                getCategoryColor(product.category)
+                className={`px-3 py-1 rounded-full text-sm font-semibold text-white ${getCategoryColor(product.category)}`}
               >
                 {product.category}
               </span>
