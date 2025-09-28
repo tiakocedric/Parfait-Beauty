@@ -19,6 +19,16 @@ import { useCart } from '../context/CartContext';
 import { formatPrice } from '../utils/whatsapp';
 import { supabase } from '../lib/supabase';
 
+const getCategoryColor = (category: string) => {
+  const colors = {
+    'cheveux': 'bg-purple-100 text-purple-800',
+    'visage': 'bg-pink-100 text-pink-800',
+    'compléments': 'bg-green-100 text-green-800',
+    'soins': 'bg-blue-100 text-blue-800'
+  };
+  return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+};
+
 const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -45,10 +55,7 @@ const ProductDetails: React.FC = () => {
             id,
             name,
             slug,
-            color,
-            icon
-          )
-        `)
+        .select('*')
         .eq('id', productId)
         .single();
 
@@ -259,9 +266,9 @@ const ProductDetails: React.FC = () => {
             <div className="flex items-center justify-between">
               <span 
                 className="px-3 py-1 rounded-full text-sm font-semibold text-white"
-                style={{ backgroundColor: product.categories?.color || '#6B7280' }}
+                getCategoryColor(product.category)
               >
-                {getCategoryLabel()}
+                {product.category}
               </span>
               <div className="flex items-center space-x-1">
                 {[...Array(5)].map((_, i) => (

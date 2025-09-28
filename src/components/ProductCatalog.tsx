@@ -1,36 +1,32 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter } from 'lucide-react';
-import { supabase, getCategories } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 import ProductCard from './ProductCard';
-import { Product, Category } from '../types';
+import { Product } from '../types';
 
 const ProductCatalog: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
+  const categories = [
+    { id: 'all', name: 'Tous', color: 'bg-gray-100 text-gray-800' },
+    { id: 'cheveux', name: 'Cheveux', color: 'bg-purple-100 text-purple-800' },
+    { id: 'visage', name: 'Visage', color: 'bg-pink-100 text-pink-800' },
+    { id: 'compléments', name: 'Compléments', color: 'bg-green-100 text-green-800' },
+    { id: 'soins', name: 'Soins', color: 'bg-blue-100 text-blue-800' }
+  ];
+
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, []);
 
   const fetchProducts = async () => {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select(`
-          *,
-          categories (
-            id,
-            name,
-            slug,
-            color,
-            icon
-          )
-        `)
+        .select('*')
         .gt('stock', 0) // Only show products in stock
         .order('created_at', { ascending: false });
 
@@ -46,28 +42,19 @@ const ProductCatalog: React.FC = () => {
     }
   };
 
-  const fetchCategories = async () => {
-    try {
-      const data = await getCategories();
-      setCategories(data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
-
   const categoryOptions = [
     { id: 'all', label: 'Tous les produits', count: products.length },
-    ...categories.map(cat => ({
+    ...categories.slice(1).map(cat => ({
       id: cat.id,
       label: cat.name,
-      count: products.filter(p => p.category_id === cat.id).length
+      count: products.filter(p => p.category === cat.id).length
     }))
   ];
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || product.category_id === selectedCategory;
+    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 

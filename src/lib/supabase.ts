@@ -55,13 +55,18 @@ export const uploadProductImage = async (file: File, productId: string) => {
   return publicUrl;
 };
 
-export const deleteProductImage = async (imageUrl: string) => {
-  if (!imageUrl.includes('supabase')) return;
-  
-  const path = imageUrl.split('/').slice(-2).join('/');
+export const deleteProductImage = async (imageUrl: string): Promise<void> => {
+  // Extract file path from URL
+  const urlParts = imageUrl.split('/');
+  const fileName = urlParts[urlParts.length - 1];
+  const filePath = `${fileName}`;
+
   const { error } = await supabase.storage
     .from('product-images')
-    .remove([path]);
-  
-  if (error) console.error('Error deleting image:', error);
+    .remove([filePath]);
+
+  if (error) {
+    console.error('Error deleting image:', error);
+    throw error;
+  }
 };
