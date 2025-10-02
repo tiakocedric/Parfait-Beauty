@@ -61,9 +61,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* Stock indicator */}
         {product.stock < 10 && (
-              getCategoryColor(product.category)
+          <div className="absolute bottom-4 left-4">
             <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-              {product.category}
+              Stock faible: {product.stock}
             </span>
           </div>
         )}
