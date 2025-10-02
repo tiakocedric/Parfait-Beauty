@@ -151,32 +151,34 @@ const Dashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Vue d'ensemble de votre boutique</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-1">Vue d'ensemble de votre boutique</p>
         </div>
-        <div className="flex items-center space-x-3 mt-4 sm:mt-0">
-          <button className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
-            <Download className="h-4 w-4 mr-2" />
-            Exporter
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 mt-4 sm:mt-0">
+          <button className="inline-flex items-center justify-center px-3 sm:px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+            <Download className="h-4 w-4 mr-2 flex-shrink-0" />
+            <span className="hidden sm:inline">Exporter</span>
+            <span className="sm:hidden">Export</span>
           </button>
-          <button className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-lg text-sm font-medium hover:from-pink-600 hover:to-pink-700">
-            <Plus className="h-4 w-4 mr-2" />
-            Nouveau produit
+          <button className="inline-flex items-center justify-center px-3 sm:px-4 py-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-lg text-sm font-medium hover:from-pink-600 hover:to-pink-700 transition-all">
+            <Plus className="h-4 w-4 mr-2 flex-shrink-0" />
+            <span className="hidden sm:inline">Nouveau produit</span>
+            <span className="sm:hidden">Nouveau</span>
           </button>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {statCards.map((stat, index) => (
-          <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div key={index} className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">{stat.title}</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900 mt-1 truncate" title={stat.value}>{stat.value}</p>
               </div>
-              <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                <stat.icon className={`h-6 w-6 ${stat.color}`} />
+              <div className={`p-2 sm:p-3 rounded-lg ${stat.bgColor} flex-shrink-0`}>
+                <stat.icon className={`h-4 w-4 sm:h-6 sm:w-6 ${stat.color}`} />
               </div>
             </div>
           </div>
@@ -185,10 +187,10 @@ const Dashboard: React.FC = () => {
 
       {/* Alerts */}
       {stats.lowStockProducts > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3 sm:p-4">
           <div className="flex items-center">
-            <AlertTriangle className="h-5 w-5 text-red-500 mr-2" />
-            <p className="text-red-700 font-medium">
+            <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-500 mr-2 flex-shrink-0" />
+            <p className="text-sm sm:text-base text-red-700 font-medium">
               {stats.lowStockProducts} produit(s) en rupture de stock
             </p>
           </div>
@@ -197,21 +199,21 @@ const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">Commandes récentes</h3>
+        <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200">
+          <div className="p-4 sm:p-6 border-b border-gray-200">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900">Commandes récentes</h3>
           </div>
-          <div className="p-6">
+          <div className="p-4 sm:p-6">
             {recentOrders.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {recentOrders.map((order) => (
-                  <div key={order.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900">{order.customer_name}</p>
-                      <p className="text-sm text-gray-600">{order.phone}</p>
+                  <div key={order.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 bg-gray-50 rounded-lg space-y-2 sm:space-y-0">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-gray-900 truncate">{order.customer_name}</p>
+                      <p className="text-xs sm:text-sm text-gray-600 truncate">{order.phone}</p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900">{formatPrice(order.total)}</p>
+                    <div className="text-left sm:text-right flex-shrink-0">
+                      <p className="text-sm sm:text-base font-semibold text-gray-900">{formatPrice(order.total)}</p>
                       <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
                         order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                         order.status === 'confirmed' ? 'bg-blue-100 text-blue-800' :
@@ -225,38 +227,38 @@ const Dashboard: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-8">Aucune commande récente</p>
+              <p className="text-sm sm:text-base text-gray-500 text-center py-6 sm:py-8">Aucune commande récente</p>
             )}
           </div>
         </div>
 
         {/* Top Products */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">Produits populaires</h3>
+        <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200">
+          <div className="p-4 sm:p-6 border-b border-gray-200">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900">Produits populaires</h3>
           </div>
-          <div className="p-6">
+          <div className="p-4 sm:p-6">
             {topProducts.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {topProducts.map((product) => (
-                  <div key={product.id} className="flex items-center space-x-4">
+                  <div key={product.id} className="flex items-center space-x-3 sm:space-x-4">
                     <img
                       src={product.image_url}
                       alt={product.name}
-                      className="w-12 h-12 rounded-lg object-cover"
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover flex-shrink-0"
                     />
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-900">{product.name}</p>
-                      <p className="text-sm text-gray-600">{formatPrice(product.price)}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm sm:text-base font-medium text-gray-900 truncate">{product.name}</p>
+                      <p className="text-xs sm:text-sm text-gray-600">{formatPrice(product.price)}</p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">Stock: {product.stock}</p>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-xs sm:text-sm font-medium text-gray-900">Stock: {product.stock}</p>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-8">Aucun produit</p>
+              <p className="text-sm sm:text-base text-gray-500 text-center py-6 sm:py-8">Aucun produit</p>
             )}
           </div>
         </div>
