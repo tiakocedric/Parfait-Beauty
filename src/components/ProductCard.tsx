@@ -6,16 +6,6 @@ import { useCart } from '../context/CartContext';
 import { formatPrice } from '../utils/whatsapp';
 
 interface ProductCardProps {
-const getCategoryColor = (category: string) => {
-  const colors = {
-    'cheveux': 'bg-purple-100 text-purple-800',
-    'visage': 'bg-pink-100 text-pink-800',
-    'compléments': 'bg-green-100 text-green-800',
-    'soins': 'bg-blue-100 text-blue-800'
-  };
-  return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
-};
-
   product: Product;
 }
 
